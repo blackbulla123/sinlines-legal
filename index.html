@@ -94,7 +94,7 @@ main:focus{outline:none}
 .ig:hover{color:#fff;background:rgba(255,255,255,.08)}
 .ig:active{transform:scale(.94)}
 .menu-btn{display:none;min-height:44px;padding:0 16px;border-radius:999px;border:0;background:transparent;box-shadow:inset 0 0 0 1px rgba(220,235,255,.5);color:var(--ice);font:500 13px/1 var(--mono);letter-spacing:.04em;text-transform:uppercase;cursor:pointer}
-.progress{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,#1E58E6,#7CCBFF 55%,#FFD25E);transform-origin:0 50%;transform:scaleX(var(--progress,0))}
+.progress{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,#1E58E6,#7CCBFF 55%,#FFD25E);transform-origin:0 50%;transform:scaleX(var(--progress,0));will-change:transform}
 
 .menu{position:fixed;inset:0;z-index:150;display:flex;flex-direction:column;justify-content:space-between;gap:24px;padding:20px clamp(16px,4vw,40px) 28px;box-sizing:border-box;background:radial-gradient(90% 70% at 80% 0%,#10285C,#060D22 55%,#02050D);animation:menuBg .5s var(--ease) both;overflow:auto}
 @keyframes menuBg{from{opacity:0}to{opacity:1}}
@@ -195,12 +195,11 @@ main:focus{outline:none}
 @keyframes draw{to{stroke-dashoffset:0}}
 
 .hero{position:relative;padding-top:0;padding-bottom:clamp(120px,12vw,180px);overflow:hidden}
-.hero-glow{position:absolute;right:-320px;top:-260px;width:1300px;height:1300px;background:radial-gradient(closest-side,rgba(46,141,255,.42),rgba(30,88,230,.16) 45%,transparent 72%);pointer-events:none;translate:0 calc(var(--sy,0) * .3px)}
+.hero-glow{position:absolute;right:-320px;top:-260px;width:1300px;height:1300px;background:radial-gradient(closest-side,rgba(46,141,255,.42),rgba(30,88,230,.16) 45%,transparent 72%);pointer-events:none;translate:0 calc(var(--sy,0) * .3px);will-change:transform}
 .hero-glow2{position:absolute;left:-360px;top:260px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,190,70,.11),transparent 70%);pointer-events:none}
-.stars{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.stars circle{animation:twinkle 4s ease-in-out infinite}
-.stars circle:nth-child(3n){animation-delay:-1.3s;animation-duration:5.2s}
-.stars circle:nth-child(4n+1){animation-delay:-2.6s;animation-duration:3.4s}
+.stars{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;animation:twinkle 4s ease-in-out infinite}
+.stars.t1{animation-delay:-1.3s;animation-duration:5.2s}
+.stars.t2{animation-delay:-2.6s;animation-duration:3.4s}
 @keyframes twinkle{0%,100%{opacity:.2}50%{opacity:1}}
 .hero-grid{position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,470px),1fr));gap:clamp(56px,6vw,80px);align-items:center}
 .h1{margin:24px 0 0;font-family:var(--serif);font-weight:300;font-size:clamp(54px,6.2vw,92px);line-height:1.02;letter-spacing:-.04em;color:var(--ice)}
@@ -219,11 +218,12 @@ main:focus{outline:none}
 @keyframes entPhone{from{opacity:0;transform:perspective(1400px) rotateX(18deg) rotateY(-14deg) translateY(80px) scale(.9);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
 @keyframes entFade{from{opacity:0}to{opacity:1}}
 .hero-stage{position:relative;display:flex;justify-content:center;padding:24px 0}
-.hero-stage .phone{translate:0 calc(var(--sy,0) * -.08px)}
+.hero-stage .phone{translate:0 calc(var(--sy,0) * -.08px);will-change:transform}
 .halo{position:absolute;left:50%;top:50%;width:620px;height:620px;margin:-310px 0 0 -310px;border-radius:50%;border:1px solid rgba(255,210,94,.16);pointer-events:none}
 .halo.two{width:820px;height:820px;margin:-410px 0 0 -410px;border-color:rgba(124,203,255,.1)}
 .halo.three{width:440px;height:440px;margin:-220px 0 0 -220px;border-color:rgba(124,203,255,.14)}
 .float{position:absolute;z-index:4;animation:bob 7s ease-in-out infinite}
+.float.glass{background:rgba(12,26,60,.92);backdrop-filter:none;-webkit-backdrop-filter:none}
 .float.f2{animation-delay:-2.4s}.float.f3{animation-delay:-4.6s}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 .glass{background:rgba(12,26,60,.74);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(170,200,255,.2);border-radius:20px;box-shadow:0 30px 60px -24px rgba(0,0,0,.85)}
@@ -231,7 +231,8 @@ main:focus{outline:none}
 .flow{animation:flow 16s linear infinite}
 .flow.b{animation-duration:23s;animation-direction:reverse}
 .flow.c{animation-duration:30s}
-@keyframes flow{from{transform:translateX(0)}to{transform:translateX(-360px)}}
+.waves svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+@keyframes flow{from{transform:translateX(0)}to{transform:translateX(-25%)}}
 .cue{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--dim);font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;z-index:2}
 .cue i{display:block;width:1px;height:52px;background:linear-gradient(180deg,#FFD25E,transparent);transform-origin:top;animation:cue 2.4s ease-in-out infinite}
 @keyframes cue{0%{transform:scaleY(0);opacity:1}55%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}
@@ -258,7 +259,7 @@ main:focus{outline:none}
 .w.lit{color:#EAF3FF}
 .w.now{color:#FFD25E;text-shadow:0 0 22px rgba(255,210,94,.65)}
 
-.marq{position:relative;overflow:hidden;padding-block:10px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);transform:skewX(calc(var(--skew,0) * 1deg))}
+.marq{position:relative;overflow:hidden;padding-block:10px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);transform:skewX(calc(var(--skew,0) * 1deg));will-change:transform}
 .track{display:flex;width:max-content;animation:marq 90s linear infinite}
 .track.rev{animation-direction:reverse;animation-duration:110s}
 .marq:hover .track{animation-play-state:paused}
@@ -467,7 +468,7 @@ main:focus{outline:none}
 @keyframes recede{to{opacity:.2;transform:scale(.93) translateY(-24px)}}
 @keyframes heroOut{to{opacity:0;transform:translateY(-90px) scale(.96)}}
 
-.calm .track,.calm .flow,.calm .stars circle,.calm .float,.calm .blob,.calm .chap::after,.calm .vault-sheen,.calm .live,.calm .lock-ic,.calm .sl-load i,.calm .rs.now::before,.calm .cue i,.calm .blank::after,.calm .blank.b1::before,.calm .slide,.calm .hero-out{animation:none!important}
+.calm .track,.calm .flow,.calm .stars,.calm .float,.calm .blob,.calm .chap::after,.calm .vault-sheen,.calm .live,.calm .lock-ic,.calm .sl-load i,.calm .rs.now::before,.calm .cue i,.calm .blank::after,.calm .blank.b1::before,.calm .slide,.calm .hero-out{animation:none!important}
 .calm .ent,.calm .ent-mask,.calm .ent-phone{animation-name:entFade!important}
 .calm .hero-glow,.calm .hero-stage .phone,.calm .marq{translate:none;transform:none}
 .calm.rv-on [data-reveal]{transform:none!important;filter:none!important;transition:opacity .6s ease!important}
@@ -476,24 +477,36 @@ main:focus{outline:none}
 .calm.rv-on .soon[data-reveal]{letter-spacing:-.045em!important}
 .calm .layers{--p:1!important;transition:none!important}
 
-.promo{position:relative;z-index:3;display:flex;height:56px;margin:12px 0 20px;background:linear-gradient(90deg,rgba(8,22,49,.25),rgba(16,40,92,.55) 30%,rgba(16,40,92,.55) 70%,rgba(8,22,49,.25));border-block:1px solid rgba(170,200,255,.09);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.promo::before{content:'';position:absolute;left:0;right:0;top:-1px;height:1px;background:linear-gradient(90deg,transparent,#E2972A 20%,#FFD25E 40%,#FFF8DC 50%,#FFD25E 60%,#E2972A 80%,transparent);background-size:200% 100%;animation:shine 6s linear infinite}
-.pr-view{position:relative;flex:1;min-width:0;display:flex;align-items:center;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);transform:skewX(calc(var(--skew,0) * 1deg))}
+.promo{position:relative;z-index:3;display:flex;height:60px;margin:10px 0 18px;background:linear-gradient(90deg,#0B1D48,#11306E 22%,#14377C 50%,#11306E 78%,#0B1D48);box-shadow:0 22px 50px -24px rgba(255,190,70,.55),0 0 70px -24px rgba(46,141,255,.6)}
+.pr-fx{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.pr-fx::before,.pr-fx::after{content:'';position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,210,94,.6) 15%,rgba(255,210,94,.6) 85%,transparent)}
+.pr-fx::before{top:0}
+.pr-fx::after{bottom:0}
+.pr-sheen{position:absolute;top:0;bottom:0;left:0;width:34%;background:linear-gradient(100deg,transparent,rgba(255,220,140,.17) 50%,transparent);animation:prSheen 6s var(--inout) infinite}
+.pr-beam{position:absolute;top:-1px;left:0;width:26%;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#FFD25E 35%,#FFF8DC 50%,#FFD25E 65%,transparent);box-shadow:0 0 16px 3px rgba(255,210,94,.5);pointer-events:none;animation:prBeam 3.8s linear infinite}
+.pr-beam.lo{top:auto;bottom:-1px;animation-duration:4.6s;animation-direction:reverse}
+@keyframes prBeam{from{transform:translateX(-100%)}to{transform:translateX(390%)}}
+@keyframes prSheen{0%{transform:translateX(-100%)}60%,100%{transform:translateX(300%)}}
+.pr-tag{position:relative;flex:none;display:flex;align-items:center;gap:11px;padding:0 22px 0 clamp(16px,3vw,40px);border-right:1px solid rgba(255,210,94,.22);font:600 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#FFD25E;white-space:nowrap}
+.pr-tag i{position:relative;width:8px;height:8px;border-radius:50%;background:#FFD25E;box-shadow:0 0 10px rgba(255,210,94,.9)}
+.pr-tag i::after{content:'';position:absolute;inset:0;border-radius:50%;border:1px solid #FFD25E;animation:prPing 1.8s var(--out) infinite}
+@keyframes prPing{from{transform:scale(1);opacity:.9}to{transform:scale(3.2);opacity:0}}
+.pr-view{position:relative;flex:1;min-width:0;display:flex;align-items:center;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);transform:skewX(calc(var(--skew,0) * 1deg));will-change:transform}
 .pr-track{display:flex;width:max-content;animation:prMarq var(--pr-dur,60s) linear infinite}
 .pr-view:hover .pr-track{animation-play-state:paused}
 @keyframes prMarq{to{transform:translateX(-50%)}}
-.pr-item{display:inline-flex;align-items:center;gap:20px;padding-right:20px;white-space:nowrap;font:500 15px/1 var(--sans);color:var(--mist)}
+.pr-item{display:inline-flex;align-items:center;gap:20px;padding-right:20px;white-space:nowrap;font:500 16px/1 var(--sans);color:#C9D6EE}
 .pr-item svg{flex:none}
 .pr-item b{font-weight:600;color:var(--ice)}
-.pr-item em{font:italic 400 20px/1 var(--serif);letter-spacing:-.01em;color:#FFD25E;text-shadow:0 0 22px rgba(255,190,70,.55)}
-.pr-cta{flex:none;display:flex;align-items:center;padding:0 clamp(12px,3vw,40px) 0 clamp(12px,1.6vw,20px);border-left:1px solid var(--hair)}
+.pr-item em{font:italic 500 23px/1 var(--serif);letter-spacing:-.01em;color:#FFD25E;text-shadow:0 0 18px rgba(255,190,70,.75)}
+.pr-cta{position:relative;flex:none;display:flex;align-items:center;padding:0 clamp(12px,3vw,40px) 0 clamp(12px,1.6vw,20px);border-left:1px solid rgba(255,210,94,.22)}
 
 .lq{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border:0;border-radius:999px;background:linear-gradient(180deg,#FFE493,#F2B544);color:#1B1305;font:600 15px/1 var(--sans);white-space:nowrap;box-sizing:border-box;cursor:pointer;translate:var(--mx,0px) var(--my,0px);transition:transform .16s var(--out),translate .6s var(--out);-webkit-tap-highlight-color:transparent}
 .lq:active{transform:scale(.97)}
 .lq.sm{min-height:44px;padding:0 20px;font-size:14px}
 .lq:disabled{cursor:progress}
 .lq-glow,.lq-body{position:absolute;border-radius:inherit;overflow:hidden;pointer-events:none}
-.lq-glow{left:-5%;right:-5%;top:22%;bottom:-30%;z-index:-2;filter:blur(16px);opacity:.7;transition:opacity .4s var(--out)}
+.lq-glow{left:-5%;right:-5%;top:22%;bottom:-30%;z-index:-2;background:linear-gradient(90deg,#FFD25E,#E2972A 50%,#FFE493);filter:blur(16px);opacity:.7;transition:opacity .4s var(--out)}
 .lq-body{inset:0;z-index:-1;background:#F2B544}
 .lq-body::before{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.5) 48%,transparent 62%);transform:translateX(-120%);animation:lqSheen 4.8s var(--inout) infinite}
 .lq-body::after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.85),inset 0 -10px 18px -10px rgba(140,64,0,.6),inset 0 0 0 1px rgba(255,248,220,.35),inset 0 0 12px rgba(255,248,220,.3)}
@@ -546,8 +559,7 @@ main:focus{outline:none}
 .pa-ok{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:rgba(255,210,94,.12);color:#FFD25E}
 .pa-done .btn{margin-top:24px}
 
-@media (prefers-reduced-motion:reduce){.pr-track,.promo::before,.lq-liq i,.lq-body::before{animation:none}}
-@media (max-width:640px){.pr-item{gap:14px;padding-right:14px;font-size:14px}.pr-item em{font-size:18px}}
+@media (max-width:640px){.pr-item{gap:14px;padding-right:14px;font-size:14px}.pr-item em{font-size:19px}}
 
 @media (max-width:960px){.nav-links{display:none}.menu-btn{display:inline-flex;align-items:center}}
 @media (max-width:640px){.float,.hide-sm,.halo.two,.ghost-card{display:none}.qcard{width:300px;padding:22px}.qline{font-size:18px}.coming{letter-spacing:.4em;gap:14px}.road{grid-template-columns:1fr}.bk-stage{transform:scale(.78)}.vault-badge{min-width:0;width:80%;padding:20px}.stack-in{scale:.78}.ig.nav-ig{display:none}.corners .bl{display:none}.g-books{grid-template-columns:repeat(3,minmax(0,1fr))}.g-books i:nth-child(n+4){display:none}.g-cards{grid-template-columns:1fr 1fr}}
@@ -658,20 +670,28 @@ main:focus{outline:none}
 <div class="hero-glow" aria-hidden="true"></div>
 <div class="hero-glow2" aria-hidden="true"></div>
 <svg class="stars" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-<circle cx="120" cy="80" r="1.2" fill="#DDF3FF"></circle><circle cx="260" cy="190" r="1" fill="#FFD25E"></circle><circle cx="340" cy="60" r="1.4" fill="#DDF3FF"></circle><circle cx="480" cy="140" r="1" fill="#DDF3FF"></circle><circle cx="610" cy="40" r="0.9" fill="#FFD25E"></circle><circle cx="720" cy="210" r="1.3" fill="#DDF3FF"></circle><circle cx="860" cy="90" r="1" fill="#DDF3FF"></circle><circle cx="980" cy="170" r="1.6" fill="#FFD25E"></circle><circle cx="1100" cy="50" r="1" fill="#DDF3FF"></circle><circle cx="1220" cy="140" r="1.2" fill="#DDF3FF"></circle><circle cx="1340" cy="70" r="1" fill="#FFD25E"></circle><circle cx="1400" cy="230" r="1.1" fill="#DDF3FF"></circle><circle cx="60" cy="300" r="1" fill="#DDF3FF"></circle><circle cx="180" cy="420" r="1.4" fill="#FFD25E"></circle><circle cx="300" cy="350" r="0.9" fill="#DDF3FF"></circle><circle cx="420" cy="500" r="1.1" fill="#DDF3FF"></circle><circle cx="560" cy="380" r="1.3" fill="#FFD25E"></circle><circle cx="690" cy="460" r="0.9" fill="#DDF3FF"></circle><circle cx="800" cy="330" r="1.2" fill="#DDF3FF"></circle><circle cx="930" cy="420" r="1" fill="#FFD25E"></circle><circle cx="1050" cy="300" r="1.5" fill="#DDF3FF"></circle><circle cx="1180" cy="400" r="0.9" fill="#DDF3FF"></circle><circle cx="1300" cy="330" r="1.2" fill="#FFD25E"></circle><circle cx="1390" cy="470" r="1" fill="#DDF3FF"></circle><circle cx="90" cy="600" r="1.1" fill="#FFD25E"></circle><circle cx="230" cy="700" r="0.9" fill="#DDF3FF"></circle><circle cx="370" cy="640" r="1.3" fill="#DDF3FF"></circle><circle cx="520" cy="760" r="1" fill="#FFD25E"></circle><circle cx="650" cy="690" r="1.2" fill="#DDF3FF"></circle><circle cx="780" cy="800" r="0.9" fill="#DDF3FF"></circle><circle cx="900" cy="620" r="1.4" fill="#FFD25E"></circle><circle cx="1020" cy="740" r="1" fill="#DDF3FF"></circle><circle cx="1150" cy="660" r="1.2" fill="#DDF3FF"></circle><circle cx="1270" cy="780" r="0.9" fill="#FFD25E"></circle><circle cx="1380" cy="640" r="1.3" fill="#DDF3FF"></circle><circle cx="40" cy="820" r="1" fill="#DDF3FF"></circle><circle cx="450" cy="860" r="1.1" fill="#DDF3FF"></circle><circle cx="980" cy="870" r="1" fill="#FFD25E"></circle>
+<circle cx="260" cy="190" r="1" fill="#FFD25E"></circle><circle cx="480" cy="140" r="1" fill="#DDF3FF"></circle><circle cx="860" cy="90" r="1" fill="#DDF3FF"></circle><circle cx="980" cy="170" r="1.6" fill="#FFD25E"></circle><circle cx="1220" cy="140" r="1.2" fill="#DDF3FF"></circle><circle cx="1340" cy="70" r="1" fill="#FFD25E"></circle><circle cx="180" cy="420" r="1.4" fill="#FFD25E"></circle><circle cx="420" cy="500" r="1.1" fill="#DDF3FF"></circle><circle cx="800" cy="330" r="1.2" fill="#DDF3FF"></circle><circle cx="930" cy="420" r="1" fill="#FFD25E"></circle><circle cx="1180" cy="400" r="0.9" fill="#DDF3FF"></circle><circle cx="1300" cy="330" r="1.2" fill="#FFD25E"></circle><circle cx="230" cy="700" r="0.9" fill="#DDF3FF"></circle><circle cx="520" cy="760" r="1" fill="#FFD25E"></circle><circle cx="900" cy="620" r="1.4" fill="#FFD25E"></circle><circle cx="1020" cy="740" r="1" fill="#DDF3FF"></circle><circle cx="1270" cy="780" r="0.9" fill="#FFD25E"></circle><circle cx="1380" cy="640" r="1.3" fill="#DDF3FF"></circle><circle cx="980" cy="870" r="1" fill="#FFD25E"></circle>
 </svg>
-<svg class="waves" viewBox="0 0 1440 240" preserveAspectRatio="none" aria-hidden="true">
-<defs>
+<svg class="stars t1" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+<circle cx="340" cy="60" r="1.4" fill="#DDF3FF"></circle><circle cx="720" cy="210" r="1.3" fill="#DDF3FF"></circle><circle cx="1400" cy="230" r="1.1" fill="#DDF3FF"></circle><circle cx="300" cy="350" r="0.9" fill="#DDF3FF"></circle><circle cx="690" cy="460" r="0.9" fill="#DDF3FF"></circle><circle cx="1390" cy="470" r="1" fill="#DDF3FF"></circle><circle cx="370" cy="640" r="1.3" fill="#DDF3FF"></circle><circle cx="780" cy="800" r="0.9" fill="#DDF3FF"></circle><circle cx="40" cy="820" r="1" fill="#DDF3FF"></circle>
+</svg>
+<svg class="stars t2" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+<circle cx="120" cy="80" r="1.2" fill="#DDF3FF"></circle><circle cx="610" cy="40" r="0.9" fill="#FFD25E"></circle><circle cx="1100" cy="50" r="1" fill="#DDF3FF"></circle><circle cx="60" cy="300" r="1" fill="#DDF3FF"></circle><circle cx="560" cy="380" r="1.3" fill="#FFD25E"></circle><circle cx="1050" cy="300" r="1.5" fill="#DDF3FF"></circle><circle cx="90" cy="600" r="1.1" fill="#FFD25E"></circle><circle cx="650" cy="690" r="1.2" fill="#DDF3FF"></circle><circle cx="1150" cy="660" r="1.2" fill="#DDF3FF"></circle><circle cx="450" cy="860" r="1.1" fill="#DDF3FF"></circle>
+</svg>
+<div class="waves" aria-hidden="true">
+<svg class="flow" viewBox="0 0 1440 240" preserveAspectRatio="none"><defs>
 <linearGradient id="hwGold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E2972A"></stop><stop offset="0.5" stop-color="#FFD25E"></stop><stop offset="1" stop-color="#FFF8DC"></stop></linearGradient>
 <linearGradient id="hwBlue" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1E58E6"></stop><stop offset="1" stop-color="#7CCBFF"></stop></linearGradient>
-</defs>
-<g transform="translate(0 30)"><path class="flow" d="M-400 100 C-340 60 -280 60 -220 100 S-100 140 -40 100 S80 60 140 100 S260 140 320 100 S440 60 500 100 S620 140 680 100 S800 60 860 100 S980 140 1040 100 S1160 60 1220 100 S1340 140 1400 100 S1520 60 1580 100 S1700 140 1760 100 S1880 60 1940 100" fill="none" stroke="url(#hwGold)" stroke-width="2.2" stroke-opacity="0.9"></path></g>
-<g transform="translate(0 64)"><path class="flow b" d="M-400 100 C-340 72 -280 72 -220 100 S-100 128 -40 100 S80 72 140 100 S260 128 320 100 S440 72 500 100 S620 128 680 100 S800 72 860 100 S980 128 1040 100 S1160 72 1220 100 S1340 128 1400 100 S1520 72 1580 100 S1700 128 1760 100 S1880 72 1940 100" fill="none" stroke="url(#hwGold)" stroke-width="1.6" stroke-opacity="0.55"></path></g>
-<g transform="translate(0 92)"><path class="flow c" d="M-400 100 C-340 80 -280 80 -220 100 S-100 120 -40 100 S80 80 140 100 S260 120 320 100 S440 80 500 100 S620 120 680 100 S800 80 860 100 S980 120 1040 100 S1160 80 1220 100 S1340 120 1400 100 S1520 80 1580 100 S1700 120 1760 100 S1880 80 1940 100" fill="none" stroke="url(#hwBlue)" stroke-width="1.3" stroke-opacity="0.5"></path></g>
-</svg>
+</defs><g transform="translate(0 30)"><path d="M-400 100 C-340 60 -280 60 -220 100 S-100 140 -40 100 S80 60 140 100 S260 140 320 100 S440 60 500 100 S620 140 680 100 S800 60 860 100 S980 140 1040 100 S1160 60 1220 100 S1340 140 1400 100 S1520 60 1580 100 S1700 140 1760 100 S1880 60 1940 100" fill="none" stroke="url(#hwGold)" stroke-width="2.2" stroke-opacity="0.9"></path></g></svg>
+<svg class="flow b" viewBox="0 0 1440 240" preserveAspectRatio="none"><g transform="translate(0 64)"><path d="M-400 100 C-340 72 -280 72 -220 100 S-100 128 -40 100 S80 72 140 100 S260 128 320 100 S440 72 500 100 S620 128 680 100 S800 72 860 100 S980 128 1040 100 S1160 72 1220 100 S1340 128 1400 100 S1520 72 1580 100 S1700 128 1760 100 S1880 72 1940 100" fill="none" stroke="url(#hwGold)" stroke-width="1.6" stroke-opacity="0.55"></path></g></svg>
+<svg class="flow c" viewBox="0 0 1440 240" preserveAspectRatio="none"><g transform="translate(0 92)"><path d="M-400 100 C-340 80 -280 80 -220 100 S-100 120 -40 100 S80 80 140 100 S260 120 320 100 S440 80 500 100 S620 120 680 100 S800 80 860 100 S980 120 1040 100 S1160 80 1220 100 S1340 120 1400 100 S1520 80 1580 100 S1700 120 1760 100 S1880 80 1940 100" fill="none" stroke="url(#hwBlue)" stroke-width="1.3" stroke-opacity="0.5"></path></g></svg>
+</div>
 
 <div class="promo ent" role="region" aria-label="Pre-apply offer" style="animation-delay: .02s">
+<div class="pr-fx" aria-hidden="true"><i class="pr-sheen"></i></div>
+<i class="pr-beam" aria-hidden="true"></i><i class="pr-beam lo" aria-hidden="true"></i>
 <p class="sr">Pre-apply now to sinlines and get up to ₹2,500 cashback. Terms apply.</p>
+<span class="pr-tag hide-sm" aria-hidden="true"><i></i>Pre-apply open</span>
 <div class="pr-view" aria-hidden="true"><div class="pr-track" id="promoTrack"></div></div>
 <div class="pr-cta"><button class="lq sm magnet" type="button" data-pa="band"><span class="lq-label"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C12.6 7.6 16.4 11.4 22 12C16.4 12.6 12.6 16.4 12 22C11.4 16.4 7.6 12.6 2 12C7.6 11.4 11.4 7.6 12 2Z" fill="currentColor"></path></svg>Pre-apply</span></button></div>
 </div>
@@ -952,11 +972,10 @@ main:focus{outline:none}
 
 <section class="finale" id="launch" aria-labelledby="launch-title">
 <div class="fin-glow" aria-hidden="true"></div>
-<svg class="waves" viewBox="0 0 1440 240" preserveAspectRatio="none" aria-hidden="true" style="top: 40%; bottom: auto; margin-top: -120px">
-<defs><linearGradient id="fwGold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E2972A"></stop><stop offset="0.5" stop-color="#FFD25E"></stop><stop offset="1" stop-color="#FFF8DC"></stop></linearGradient></defs>
-<g transform="translate(0 -10)"><path class="flow" d="M-400 100 C-340 60 -280 60 -220 100 S-100 140 -40 100 S80 60 140 100 S260 140 320 100 S440 60 500 100 S620 140 680 100 S800 60 860 100 S980 140 1040 100 S1160 60 1220 100 S1340 140 1400 100 S1520 60 1580 100 S1700 140 1760 100 S1880 60 1940 100" fill="none" stroke="url(#fwGold)" stroke-width="2" stroke-opacity="0.55"></path></g>
-<g transform="translate(0 30)"><path class="flow b" d="M-400 100 C-340 72 -280 72 -220 100 S-100 128 -40 100 S80 72 140 100 S260 128 320 100 S440 72 500 100 S620 128 680 100 S800 72 860 100 S980 128 1040 100 S1160 72 1220 100 S1340 128 1400 100 S1520 72 1580 100 S1700 128 1760 100 S1880 72 1940 100" fill="none" stroke="url(#fwGold)" stroke-width="1.5" stroke-opacity="0.35"></path></g>
-</svg>
+<div class="waves" aria-hidden="true" style="top: 40%; bottom: auto; margin-top: -120px">
+<svg class="flow" viewBox="0 0 1440 240" preserveAspectRatio="none"><defs><linearGradient id="fwGold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E2972A"></stop><stop offset="0.5" stop-color="#FFD25E"></stop><stop offset="1" stop-color="#FFF8DC"></stop></linearGradient></defs><g transform="translate(0 -10)"><path d="M-400 100 C-340 60 -280 60 -220 100 S-100 140 -40 100 S80 60 140 100 S260 140 320 100 S440 60 500 100 S620 140 680 100 S800 60 860 100 S980 140 1040 100 S1160 60 1220 100 S1340 140 1400 100 S1520 60 1580 100 S1700 140 1760 100 S1880 60 1940 100" fill="none" stroke="url(#fwGold)" stroke-width="2" stroke-opacity="0.55"></path></g></svg>
+<svg class="flow b" viewBox="0 0 1440 240" preserveAspectRatio="none"><g transform="translate(0 30)"><path d="M-400 100 C-340 72 -280 72 -220 100 S-100 128 -40 100 S80 72 140 100 S260 128 320 100 S440 72 500 100 S620 128 680 100 S800 72 860 100 S980 128 1040 100 S1160 72 1220 100 S1340 128 1400 100 S1520 72 1580 100 S1700 128 1760 100 S1880 72 1940 100" fill="none" stroke="url(#fwGold)" stroke-width="1.5" stroke-opacity="0.35"></path></g></svg>
+</div>
 <div class="wrap" style="position: relative; display: flex; flex-direction: column; align-items: center">
 <span class="mark xl fin-logo" data-reveal="zoom"><img src="logo.png" alt="sinlines"></span>
 <div class="coming" data-reveal="up"><i></i>Coming<i class="r"></i></div>
@@ -1348,7 +1367,7 @@ main:focus{outline:none}
   // The band and the liquid keep moving whether motion is paused or playing.
   const LIQ = '<span class="lq-liq"><i></i><i></i><i></i><i></i></span>';
   const WAVES = '<svg width="30" height="12" viewBox="0 0 56 18" fill="none" stroke="#FFD25E" stroke-linecap="round" aria-hidden="true"><path d="M3 4.5 C8 1.5 12 1.5 17 4.5 S26 7.5 31 4.5 S40 1.5 45 4.5 S50 7.5 53 4.5" stroke-width="2"></path><path d="M3 9.5 C8 6.1 12 6.1 17 9.5 S26 12.9 31 9.5 S40 6.1 45 9.5 S50 12.9 53 9.5" stroke-width="1.7" stroke-opacity="0.65"></path><path d="M3 14.2 C8 11.6 12 11.6 17 14.2 S26 16.8 31 14.2 S40 11.6 45 14.2 S50 16.8 53 14.2" stroke-width="1.4" stroke-opacity="0.35"></path></svg>';
-  root.querySelectorAll('.lq').forEach((b) => b.insertAdjacentHTML('afterbegin', '<span class="lq-glow" aria-hidden="true">' + LIQ + '</span><span class="lq-body" aria-hidden="true">' + LIQ + '</span>'));
+  root.querySelectorAll('.lq').forEach((b) => b.insertAdjacentHTML('afterbegin', '<span class="lq-glow" aria-hidden="true"></span><span class="lq-body" aria-hidden="true">' + LIQ + '</span>'));
 
   const promoTrack = $('promoTrack');
   const promoRow = () => PROMO.map((p) => '<span class="pr-item">' + WAVES + '<span>' + (p.lead ? '<b>' + esc(p.lead) + '</b>' : '') + esc(p.t) + (p.em ? '<em>' + esc(p.em) + '</em>' : '') + '</span></span>').join('');
@@ -1421,7 +1440,7 @@ main:focus{outline:none}
     const to = paFit();
     const from = trigger.getBoundingClientRect();
     $('paScrim').animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, easing: 'ease-out' });
-    if (reduced || !from.width) {
+    if (!from.width) {
       paPanel.animate([{ opacity: 0, transform: 'scale(.97)' }, { opacity: 1, transform: 'none' }], { duration: 240, easing: 'ease-out' });
     } else {
       trigger.style.visibility = 'hidden';
@@ -1440,7 +1459,7 @@ main:focus{outline:none}
     const trigger = paS.trigger;
     const from = paPanel.getBoundingClientRect();
     const to = trigger.getBoundingClientRect();
-    const home = !reduced && to.width > 0 && to.bottom > 0 && to.top < window.innerHeight;
+    const home = to.width > 0 && to.bottom > 0 && to.top < window.innerHeight;
     stopAll();
     const dur = home ? 460 : 220;
     $('paScrim').animate([{ opacity: 1 }, { opacity: 0 }], { duration: dur, easing: 'ease-in', fill: 'forwards' });
@@ -1472,10 +1491,8 @@ main:focus{outline:none}
       ? 'Your email app just opened with a pre-apply note for <b>' + esc(email) + '</b>. Press send and you’re in. No email app? Write to <a href="mailto:sinlines.read@gmail.com">sinlines.read@gmail.com</a>.'
       : 'We’ll write to <b>' + esc(email) + '</b> when sinlines lands on Android and iOS.';
     const to = paFit();
-    if (!reduced) {
-      paPanel.animate([box(from, 28), box(to, 28)], { duration: 520, easing: EXPO });
-      $('paDone').animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 480, easing: EXPO });
-    }
+    paPanel.animate([box(from, 28), box(to, 28)], { duration: 520, easing: EXPO });
+    $('paDone').animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 480, easing: EXPO });
     try {
       $('paDoneTitle').focus({ preventScroll: true });
     } catch (e) {}
@@ -1575,11 +1592,26 @@ main:focus{outline:none}
     let last = target;
     let raf = 0;
     let glide = null;
+    let then = 0;
+    let skew = '';
+    let sy = '';
+    const bar = root.querySelector('.progress');
+    const drift = [root.querySelector('.hero-glow'), root.querySelector('.hero-stage .phone')];
+    const skewed = Array.from(root.querySelectorAll('.marq, .pr-view'));
+    const setSkew = (v) => {
+      if (v === skew) return;
+      skew = v;
+      skewed.forEach((el) => el.style.setProperty('--skew', v));
+    };
     paintScroll = () => {
       const y = se.scrollTop;
       const m = max();
-      root.style.setProperty('--progress', m > 0 ? (y / m).toFixed(4) : '0');
-      root.style.setProperty('--sy', String(Math.round(y)));
+      bar.style.setProperty('--progress', m > 0 ? (y / m).toFixed(4) : '0');
+      const next = String(Math.round(Math.min(y, window.innerHeight * 2.5)));
+      if (next !== sy) {
+        sy = next;
+        drift.forEach((el) => el.style.setProperty('--sy', sy));
+      }
       if (s.wide && !s.paused) {
         const r = L.getBoundingClientRect();
         const span = r.height - window.innerHeight;
@@ -1589,25 +1621,28 @@ main:focus{outline:none}
         L.style.removeProperty('--p');
       }
     };
-    const loop = () => {
+    const loop = (now) => {
+      const dt = then ? Math.min(64, now - then) : 16.7;
+      then = now;
       if (glide) {
         const t = Math.min(1, (performance.now() - glide.t0) / glide.dur);
         cur = glide.from + (glide.to - glide.from) * Math.min(1, 1.001 - Math.pow(2, -10 * t));
         target = cur;
         if (t >= 1) glide = null;
       } else {
-        cur += (target - cur) * 0.08;
+        cur += (target - cur) * (1 - Math.pow(0.88, dt / 16.7));
         if (Math.abs(target - cur) < 0.3) cur = target;
       }
       se.scrollTop = cur;
-      const v = Math.max(-1, Math.min(1, (cur - last) / 50));
+      const v = Math.max(-1, Math.min(1, (cur - last) / 50 * (16.7 / dt)));
       last = cur;
-      root.style.setProperty('--skew', (v * -2.5).toFixed(3));
+      setSkew((v * -2.5).toFixed(2));
       if (glide || cur !== target) {
         raf = requestAnimationFrame(loop);
       } else {
         raf = 0;
-        root.style.setProperty('--skew', '0');
+        then = 0;
+        setSkew('0');
       }
     };
     const start = () => {
