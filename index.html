@@ -32,6 +32,7 @@ a{color:#FFD25E}a:hover{color:#FFF8DC}
 .skip:focus{top:16px;color:#1B1305}
 .lede a,.ans a{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
 main:focus{outline:none}
+#main,#top{scroll-margin-top:72px}
 .page{position:relative;overflow-x:clip;background:#040814;color:var(--ice);font-family:var(--sans)}
 .page.locked{height:100vh;overflow:hidden}
 .wrap{max-width:1200px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);box-sizing:border-box;position:relative}
@@ -193,7 +194,7 @@ main:focus{outline:none}
 .w-lines path{stroke-dasharray:60;stroke-dashoffset:60;animation:draw 1.2s var(--out) 3.35s forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
 
-.hero{position:relative;padding-top:clamp(40px,6vw,88px);padding-bottom:clamp(120px,12vw,180px);overflow:hidden}
+.hero{position:relative;padding-top:0;padding-bottom:clamp(120px,12vw,180px);overflow:hidden}
 .hero-glow{position:absolute;right:-320px;top:-260px;width:1300px;height:1300px;background:radial-gradient(closest-side,rgba(46,141,255,.42),rgba(30,88,230,.16) 45%,transparent 72%);pointer-events:none;translate:0 calc(var(--sy,0) * .3px)}
 .hero-glow2{position:absolute;left:-360px;top:260px;width:900px;height:900px;background:radial-gradient(closest-side,rgba(255,190,70,.11),transparent 70%);pointer-events:none}
 .stars{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
@@ -473,9 +474,82 @@ main:focus{outline:none}
 .calm.rv-on .soon[data-reveal]{letter-spacing:-.045em!important}
 .calm .layers{--p:1!important;transition:none!important}
 
+.promo{position:relative;z-index:3;display:flex;height:56px;margin:12px 0 20px;background:linear-gradient(90deg,rgba(8,22,49,.25),rgba(16,40,92,.55) 30%,rgba(16,40,92,.55) 70%,rgba(8,22,49,.25));border-block:1px solid rgba(170,200,255,.09);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.promo::before{content:'';position:absolute;left:0;right:0;top:-1px;height:1px;background:linear-gradient(90deg,transparent,#E2972A 20%,#FFD25E 40%,#FFF8DC 50%,#FFD25E 60%,#E2972A 80%,transparent);background-size:200% 100%;animation:shine 6s linear infinite}
+.pr-view{position:relative;flex:1;min-width:0;display:flex;align-items:center;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);transform:skewX(calc(var(--skew,0) * 1deg))}
+.pr-track{display:flex;width:max-content;animation:prMarq var(--pr-dur,60s) linear infinite}
+.pr-view:hover .pr-track{animation-play-state:paused}
+@keyframes prMarq{to{transform:translateX(-50%)}}
+.pr-item{display:inline-flex;align-items:center;gap:20px;padding-right:20px;white-space:nowrap;font:500 15px/1 var(--sans);color:var(--mist)}
+.pr-item svg{flex:none}
+.pr-item b{font-weight:600;color:var(--ice)}
+.pr-item em{font:italic 400 20px/1 var(--serif);letter-spacing:-.01em;color:#FFD25E;text-shadow:0 0 22px rgba(255,190,70,.55)}
+.pr-cta{flex:none;display:flex;align-items:center;padding:0 clamp(12px,3vw,40px) 0 clamp(12px,1.6vw,20px);border-left:1px solid var(--hair)}
+
+.lq{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border:0;border-radius:999px;background:linear-gradient(180deg,#FFE493,#F2B544);color:#1B1305;font:600 15px/1 var(--sans);white-space:nowrap;box-sizing:border-box;cursor:pointer;translate:var(--mx,0px) var(--my,0px);transition:transform .16s var(--out),translate .6s var(--out);-webkit-tap-highlight-color:transparent}
+.lq:active{transform:scale(.97)}
+.lq.sm{min-height:44px;padding:0 20px;font-size:14px}
+.lq:disabled{cursor:progress}
+.lq-glow,.lq-body{position:absolute;border-radius:inherit;overflow:hidden;pointer-events:none}
+.lq-glow{left:-5%;right:-5%;top:22%;bottom:-30%;z-index:-2;filter:blur(16px);opacity:.7;transition:opacity .4s var(--out)}
+.lq-body{inset:0;z-index:-1;background:#F2B544}
+.lq-body::before{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.5) 48%,transparent 62%);transform:translateX(-120%);animation:lqSheen 4.8s var(--inout) infinite}
+.lq-body::after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.85),inset 0 -10px 18px -10px rgba(140,64,0,.6),inset 0 0 0 1px rgba(255,248,220,.35),inset 0 0 12px rgba(255,248,220,.3)}
+@keyframes lqSheen{0%{transform:translateX(-120%)}50%,100%{transform:translateX(120%)}}
+.lq-liq{position:absolute;inset:0;transition:transform 1s var(--out)}
+.lq-liq i{position:absolute;border-radius:50%}
+.lq-liq i:nth-child(1){left:-45%;top:-90%;width:110%;height:280%;background:radial-gradient(closest-side,#FFF8DC,rgba(255,248,220,0));animation:lq1 6.5s ease-in-out infinite alternate}
+.lq-liq i:nth-child(2){right:-45%;top:-80%;width:100%;height:260%;background:radial-gradient(closest-side,#E2972A,rgba(226,151,42,0));animation:lq2 8s ease-in-out infinite alternate}
+.lq-liq i:nth-child(3){left:15%;top:-70%;width:80%;height:240%;background:radial-gradient(closest-side,#FFD25E,rgba(255,210,94,0));animation:lq3 5.5s ease-in-out infinite alternate}
+.lq-liq i:nth-child(4){left:-20%;top:-60%;width:70%;height:220%;background:radial-gradient(closest-side,rgba(124,203,255,.7),rgba(124,203,255,0));mix-blend-mode:soft-light;animation:lq4 9.5s ease-in-out infinite alternate}
+@keyframes lq1{to{transform:translate(85%,12%) scale(.8)}}
+@keyframes lq2{to{transform:translate(-80%,-10%) scale(1.15)}}
+@keyframes lq3{from{transform:translate(-40%,10%)}to{transform:translate(45%,-12%) scale(1.2)}}
+@keyframes lq4{to{transform:translate(120%,8%) scale(1.3)}}
+.lq-label{display:inline-flex;align-items:center;gap:9px}
+.lq-label svg{flex:none;transition:transform .6s var(--out)}
+@media (hover:hover) and (pointer:fine){.lq:hover .lq-liq{transform:scale(1.4) rotate(14deg)}.lq:hover .lq-glow{opacity:1}.lq:hover .lq-label svg{transform:rotate(90deg) scale(1.15)}}
+.lq.busy .lq-liq{transform:scale(1.5) rotate(24deg)}
+
+.pa{position:fixed;inset:0;z-index:220}
+.pa-scrim{position:absolute;inset:0;background:rgba(2,5,13,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.pa-panel{position:fixed;box-sizing:border-box;border-radius:28px;overflow:hidden;background:radial-gradient(120% 80% at 50% 0%,#11306E 0%,#081631 48%,#050B1C 100%);box-shadow:inset 0 0 0 1px rgba(170,200,255,.18),0 60px 120px -40px rgba(0,0,0,.95),0 0 120px -40px rgba(46,141,255,.55);overscroll-behavior:contain}
+.pa-panel:focus{outline:none}
+.pa-panel.tall{overflow-y:auto}
+.pa-aura{position:absolute;left:-20%;right:-20%;top:-55%;height:95%;background:radial-gradient(closest-side,rgba(255,190,70,.2),rgba(255,190,70,0));pointer-events:none}
+.pa-ghost{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;border-radius:inherit;overflow:hidden;background:#F2B544;color:#1B1305;font:600 15px/1 var(--sans);white-space:nowrap;opacity:0;pointer-events:none}
+.pa-ghost .lq-label{position:relative}
+.pa-in{position:absolute;left:50%;top:50%;width:var(--paw,440px);translate:-50% -50%;box-sizing:border-box;padding:30px clamp(20px,5vw,32px) 24px}
+.pa-panel.tall .pa-in{top:0;translate:-50% 0}
+.pa-x{position:absolute;right:16px;top:16px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(220,235,255,.3);color:var(--ice);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s var(--out),transform .16s var(--out)}
+.pa-x:hover{background:rgba(255,255,255,.1)}
+.pa-x:active{transform:scale(.94)}
+.pa-h{margin:16px 0 0;padding-right:44px;font:300 clamp(32px,8vw,42px)/1.05 var(--serif);letter-spacing:-.025em;color:var(--ice)}
+.pa-h em{font-style:italic;color:#FFD25E;text-shadow:0 0 40px rgba(255,190,70,.45)}
+.pa-h:focus{outline:none}
+.pa-p{margin:12px 0 0;color:var(--mist);font-size:15.5px;line-height:1.55}
+.pa-p b{color:var(--ice);font-weight:600;word-break:break-all}
+.pa-book{display:inline-flex;gap:6px;margin:16px 0 0;padding:9px 13px;border-radius:999px;background:rgba(255,210,94,.1);border:1px solid rgba(255,210,94,.3);color:var(--mist);font:500 13px/1 var(--sans)}
+.pa-book b{color:#FFE7A3;font-weight:600}
+.pa-form{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.pa-field{flex:1 1 100%;display:flex;align-items:center;gap:10px;min-height:52px;padding:0 18px;border-radius:999px;box-sizing:border-box;background:rgba(4,8,20,.6);box-shadow:inset 0 0 0 1px rgba(170,200,255,.24);color:#5E6F92;cursor:text;transition:box-shadow .25s var(--out),color .25s var(--out)}
+.pa-field:focus-within{box-shadow:inset 0 0 0 1px #FFD25E,0 0 0 4px rgba(255,210,94,.14);color:#FFD25E}
+.pa-field.bad{box-shadow:inset 0 0 0 1px #FF8A7A,0 0 0 4px rgba(255,138,122,.12)}
+.pa-field svg{flex:none}
+.pa-field input{flex:1;min-width:0;height:50px;padding:0;border:0;background:none;color:var(--ice);font:400 16px/1 var(--sans);outline:none}
+.pa-field input::placeholder{color:var(--dim);opacity:1}
+.pa-form .lq{flex:1 1 100%}
+.pa-err{flex-basis:100%;margin:0;min-height:20px;font:500 13.5px/1.45 var(--sans);color:#FFB4A8}
+.pa-fine{margin:4px 0 0;font:400 12.5px/1.5 var(--sans);color:var(--dim)}
+.pa-ok{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:rgba(255,210,94,.12);color:#FFD25E}
+.pa-done .btn{margin-top:24px}
+
+@media (prefers-reduced-motion:reduce){.pr-track,.promo::before,.lq-liq i,.lq-body::before{animation:none}}
+@media (max-width:640px){.pr-item{gap:14px;padding-right:14px;font-size:14px}.pr-item em{font-size:18px}}
+
 @media (max-width:960px){.nav-links{display:none}.menu-btn{display:inline-flex;align-items:center}}
 @media (max-width:640px){.float,.hide-sm,.halo.two,.ghost-card{display:none}.qcard{width:300px;padding:22px}.qline{font-size:18px}.coming{letter-spacing:.4em;gap:14px}.road{grid-template-columns:1fr}.bk-stage{transform:scale(.78)}.vault-badge{min-width:0;width:80%;padding:20px}.stack-in{scale:.78}.ig.nav-ig{display:none}.corners .bl{display:none}.g-books{grid-template-columns:repeat(3,minmax(0,1fr))}.g-books i:nth-child(n+4){display:none}.g-cards{grid-template-columns:1fr 1fr}}
-@media (max-width:480px){.nav-end .btn{display:none}}
+@media (max-width:480px){.nav-end .lq{display:none}}
 @media (max-width:380px){.hero-stage .phone{width:272px;height:562px}}
 
 [hidden]{display:none!important}
@@ -557,7 +631,7 @@ main:focus{outline:none}
 </nav>
 <div class="nav-end">
 <a class="ig nav-ig" href="https://www.instagram.com/thesinlines/" aria-label="sinlines on Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor"></circle></svg></a>
-<a class="btn btn-gold btn-sm magnet" href="mailto:sinlines.read@gmail.com?subject=Tell%20me%20when%20SinLines%20launches">Email me at launch</a>
+<button class="lq sm magnet" type="button" data-pa="nav"><span class="lq-label"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C12.6 7.6 16.4 11.4 22 12C16.4 12.6 12.6 16.4 12 22C11.4 16.4 7.6 12.6 2 12C7.6 11.4 11.4 7.6 12 2Z" fill="currentColor"></path></svg>Pre-apply</span></button>
 <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="menu">Menu</button>
 </div>
 </div>
@@ -594,6 +668,12 @@ main:focus{outline:none}
 <g transform="translate(0 92)"><path class="flow c" d="M-400 100 C-340 80 -280 80 -220 100 S-100 120 -40 100 S80 80 140 100 S260 120 320 100 S440 80 500 100 S620 120 680 100 S800 80 860 100 S980 120 1040 100 S1160 80 1220 100 S1340 120 1400 100 S1520 80 1580 100 S1700 120 1760 100 S1880 80 1940 100" fill="none" stroke="url(#hwBlue)" stroke-width="1.3" stroke-opacity="0.5"></path></g>
 </svg>
 
+<div class="promo ent" role="region" aria-label="Pre-apply offer" style="animation-delay: .02s">
+<p class="sr">Pre-apply now to sinlines and get up to ₹2,500 cashback. Terms apply.</p>
+<div class="pr-view" aria-hidden="true"><div class="pr-track" id="promoTrack"></div></div>
+<div class="pr-cta"><button class="lq sm magnet" type="button" data-pa="band"><span class="lq-label"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C12.6 7.6 16.4 11.4 22 12C16.4 12.6 12.6 16.4 12 22C11.4 16.4 7.6 12.6 2 12C7.6 11.4 11.4 7.6 12 2Z" fill="currentColor"></path></svg>Pre-apply</span></button></div>
+</div>
+
 <div class="wrap">
 <div class="hero-grid">
 <div class="hero-out">
@@ -601,7 +681,7 @@ main:focus{outline:none}
 <h1 class="h1"><span class="ln"><span class="ent-mask" style="display: inline-block; animation-delay: .12s"><span class="blank b1"><span class="sr">blank</span></span> one <span class="blank b2"><span class="sr">blank</span></span></span></span><span class="ln"><em class="ent-mask" style="animation-delay: .24s">at a <span class="blank b3"><span class="sr">blank</span></span></em></span></h1>
 <p class="lede ent" style="font-size: clamp(18px, 1.6vw, 21px); animation-delay: .4s">SinLines turns great books into <span class="blank bw3"><span class="sr">blank</span></span> calm <span class="blank bw3"><span class="sr">blank</span></span> on your screen. Each word <span class="blank bw4"><span class="sr">blank</span></span> as you reach it, so your eyes always know where to go.</p>
 <div class="ent" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; animation-delay: .52s">
-<a class="btn btn-gold magnet" href="mailto:sinlines.read@gmail.com?subject=Tell%20me%20when%20SinLines%20launches">Email me at launch</a>
+<button class="lq magnet" type="button" data-pa="hero"><span class="lq-label"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C12.6 7.6 16.4 11.4 22 12C16.4 12.6 12.6 16.4 12 22C11.4 16.4 7.6 12.6 2 12C7.6 11.4 11.4 7.6 12 2Z" fill="currentColor"></path></svg>Pre-apply</span></button>
 <a class="btn btn-ghost magnet" href="#soon">Take a peek</a>
 </div>
 <div class="hero-meta ent" style="animation-delay: .64s">
@@ -888,7 +968,7 @@ main:focus{outline:none}
 <p>Which classic will you open first?</p>
 <div class="pick-row" role="group" aria-label="Your first book" id="picks"></div>
 <div class="fin-cta">
-<a class="btn btn-gold magnet" id="mailPick" href="mailto:sinlines.read@gmail.com?subject=Tell%20me%20when%20SinLines%20launches"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>Email me at launch</a>
+<button class="lq magnet" type="button" data-pa="finale"><span class="lq-label"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C12.6 7.6 16.4 11.4 22 12C16.4 12.6 12.6 16.4 12 22C11.4 16.4 7.6 12.6 2 12C7.6 11.4 11.4 7.6 12 2Z" fill="currentColor"></path></svg>Pre-apply</span></button>
 <a class="btn btn-ghost magnet" href="https://www.instagram.com/thesinlines/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor"></circle></svg>Follow @thesinlines</a>
 </div>
 </div>
@@ -933,6 +1013,35 @@ main:focus{outline:none}
 </footer>
 
 <button class="pause" type="button" id="pauseBtn" hidden><svg class="ic-play" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"></path></svg><svg class="ic-pause" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M8 5v14M16 5v14"></path></svg><span id="pauseLabel">Pause motion</span></button>
+
+<div class="pa" id="pa" hidden>
+<div class="pa-scrim" id="paScrim" data-pa-close></div>
+<div class="pa-panel" id="paPanel" role="dialog" aria-modal="true" aria-labelledby="paTitle" tabindex="-1">
+<div class="pa-aura" aria-hidden="true"></div>
+<div class="pa-in" id="paIn">
+<button class="pa-x" type="button" data-pa-close aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<div id="paMain">
+<span class="eyebrow"><svg width="30" height="12" viewBox="0 0 56 18" fill="none" stroke="#FFD25E" stroke-linecap="round" aria-hidden="true"><path d="M3 4.5 C8 1.5 12 1.5 17 4.5 S26 7.5 31 4.5 S40 1.5 45 4.5 S50 7.5 53 4.5" stroke-width="2"></path><path d="M3 9.5 C8 6.1 12 6.1 17 9.5 S26 12.9 31 9.5 S40 6.1 45 9.5 S50 12.9 53 9.5" stroke-width="1.7" stroke-opacity="0.65"></path><path d="M3 14.2 C8 11.6 12 11.6 17 14.2 S26 16.8 31 14.2 S40 11.6 45 14.2 S50 16.8 53 14.2" stroke-width="1.4" stroke-opacity="0.35"></path></svg>Pre-apply is open</span>
+<h2 class="pa-h" id="paTitle">Get up to <em>₹2,500</em> cashback*</h2>
+<p class="pa-p">Pre-apply to sinlines with your email, and we’ll write to you when it lands on Android and iOS.</p>
+<p class="pa-book" id="paBook" hidden>Your first book: <b id="paBookName"></b></p>
+<form class="pa-form" id="paForm" novalidate>
+<label class="pa-field" id="paField"><span class="sr">Your email</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg><input id="paEmail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" maxlength="254" placeholder="you@example.com" aria-describedby="paErr" required></label>
+<button class="lq" type="submit" id="paSend"><span class="lq-label"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C12.6 7.6 16.4 11.4 22 12C16.4 12.6 12.6 16.4 12 22C11.4 16.4 7.6 12.6 2 12C7.6 11.4 11.4 7.6 12 2Z" fill="currentColor"></path></svg><span id="paSendLabel">Pre-apply</span></span></button>
+<p class="pa-err" id="paErr" role="alert"></p>
+</form>
+<p class="pa-fine">*Terms apply. Full cashback details at launch.</p>
+</div>
+<div class="pa-done" id="paDone" hidden>
+<span class="pa-ok" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+<h2 class="pa-h" id="paDoneTitle" tabindex="-1"></h2>
+<p class="pa-p" id="paDoneText"></p>
+<button class="btn btn-ghost" type="button" data-pa-close>Done</button>
+</div>
+</div>
+<div class="pa-ghost" id="paGhost" aria-hidden="true"></div>
+</div>
+</div>
 
 </div>
 <script>
@@ -986,6 +1095,25 @@ main:focus{outline:none}
   function watchWords() {
       return ['Keep watching', 'More soon', 'Keep watching', 'Something calm is coming', 'Keep watching', 'Stay close'];
   }
+
+  function promoLines() {
+      return [
+        { lead: 'Pre-apply now', t: ' to sinlines and get up to ', em: '₹2,500 cashback*' },
+        { t: 'Be first in line on launch day' },
+        { lead: 'Pre-apply now', t: ' to sinlines and get up to ', em: '₹2,500 cashback*' },
+        { t: 'Coming soon to Android and iOS' }
+      ];
+  }
+
+  // The pre-apply wire: every Pre-apply form ends here with { email, from, book }. from is the button that
+  // opened it (nav, band, hero or finale); book is the first classic picked in the finale, when it came from there.
+  // Not connected yet. Until it is, it opens the visitor's email app with a pre-apply note so no one is lost.
+  // To connect it, send the entry to wherever pre-applies should be kept and resolve once it is saved.
+  function preApply(entry) {
+      const body = 'Hi SinLines team! Please pre-apply me for SinLines: ' + entry.email + '.' + (entry.book ? ' The first classic I will open: ' + entry.book + '.' : '');
+      location.href = 'mailto:sinlines.read@gmail.com?subject=' + encodeURIComponent('Pre-apply for SinLines') + '&body=' + encodeURIComponent(body);
+      return Promise.resolve('mail');
+  }
   
   function faqList() {
       return [
@@ -1031,6 +1159,7 @@ main:focus{outline:none}
   const QUOTES = quotes();
   const PICKS = pickBooks();
   const WATCH = watchWords();
+  const PROMO = promoLines();
   const FAQ = faqList();
   const MANIFESTO = manifestoWords();
 
@@ -1047,7 +1176,7 @@ main:focus{outline:none}
     fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   } catch (e) {}
 
-  const s = { phase: 'load', entered: false, rvOn: false, wide: window.innerWidth >= 900, curOn: false, menu: false, paused: reduced, h: 0, hw: 0, d: 0, dw: 0, faq: -1, pick: 1 };
+  const s = { phase: 'load', entered: false, rvOn: false, wide: window.innerWidth >= 900, curOn: false, menu: false, pa: false, paused: reduced, h: 0, hw: 0, d: 0, dw: 0, faq: -1, pick: 1 };
   const timers = {};
   let paintScroll = () => {};
 
@@ -1209,10 +1338,179 @@ main:focus{outline:none}
       b.className = k === i ? 'pk on' : 'pk';
       b.setAttribute('aria-pressed', String(k === i));
     });
-    const body = 'Hi SinLines team! Please tell me when the app launches. The first classic I will open: ' + PICKS[i] + '.';
-    $('mailPick').href = 'mailto:sinlines.read@gmail.com?subject=' + encodeURIComponent('Tell me when SinLines launches') + '&body=' + encodeURIComponent(body);
   }
   pickBtns.forEach((b, i) => b.addEventListener('click', () => setPick(i)));
+
+  // Pre-apply: the liquid buttons, the moving band under the menu bar and the dialog the buttons grow into.
+  // The band and the liquid keep moving whether motion is paused or playing.
+  const LIQ = '<span class="lq-liq"><i></i><i></i><i></i><i></i></span>';
+  const WAVES = '<svg width="30" height="12" viewBox="0 0 56 18" fill="none" stroke="#FFD25E" stroke-linecap="round" aria-hidden="true"><path d="M3 4.5 C8 1.5 12 1.5 17 4.5 S26 7.5 31 4.5 S40 1.5 45 4.5 S50 7.5 53 4.5" stroke-width="2"></path><path d="M3 9.5 C8 6.1 12 6.1 17 9.5 S26 12.9 31 9.5 S40 6.1 45 9.5 S50 12.9 53 9.5" stroke-width="1.7" stroke-opacity="0.65"></path><path d="M3 14.2 C8 11.6 12 11.6 17 14.2 S26 16.8 31 14.2 S40 11.6 45 14.2 S50 16.8 53 14.2" stroke-width="1.4" stroke-opacity="0.35"></path></svg>';
+  root.querySelectorAll('.lq').forEach((b) => b.insertAdjacentHTML('afterbegin', '<span class="lq-glow" aria-hidden="true">' + LIQ + '</span><span class="lq-body" aria-hidden="true">' + LIQ + '</span>'));
+
+  const promoTrack = $('promoTrack');
+  const promoRow = () => PROMO.map((p) => '<span class="pr-item">' + WAVES + '<span>' + (p.lead ? '<b>' + esc(p.lead) + '</b>' : '') + esc(p.t) + (p.em ? '<em>' + esc(p.em) + '</em>' : '') + '</span></span>').join('');
+  const promoHalf = promoRow().repeat(Math.max(2, Math.ceil((window.screen.width || 1920) / 1500)));
+  promoTrack.innerHTML = promoHalf + promoHalf;
+  const promoPace = () => promoTrack.style.setProperty('--pr-dur', (promoTrack.offsetWidth / 2 / 64).toFixed(1) + 's');
+  promoPace();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(promoPace);
+
+  const pa = $('pa');
+  const paPanel = $('paPanel');
+  const paIn = $('paIn');
+  const paGhost = $('paGhost');
+  const paField = $('paField');
+  const paEmail = $('paEmail');
+  const paSend = $('paSend');
+  const paErr = $('paErr');
+  const EXPO = 'cubic-bezier(.16,1,.3,1)';
+  const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  const paS = { trigger: null, from: '', sending: false };
+  paGhost.innerHTML = LIQ + '<span class="lq-label">' + paSend.querySelector('svg').outerHTML + 'Pre-apply</span>';
+
+  const box = (r, round) => ({ left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', borderRadius: round + 'px' });
+  const stopAll = () => [$('paScrim'), paPanel, paIn, paGhost, $('paDone')].forEach((el) => el.getAnimations().forEach((a) => a.cancel()));
+
+  // Sizes the panel to its content, centred in the window, and returns where it sits.
+  function paFit() {
+    const vw = document.documentElement.clientWidth;
+    const vh = window.innerHeight;
+    const w = Math.min(460, vw - 32);
+    paPanel.style.setProperty('--paw', w + 'px');
+    const need = paIn.offsetHeight;
+    const h = Math.min(need, vh - 32);
+    paPanel.classList.toggle('tall', need > h);
+    const r = { left: (vw - w) / 2, top: Math.max(16, (vh - h) / 2), width: w, height: h };
+    Object.assign(paPanel.style, box(r, 28));
+    return r;
+  }
+
+  function paLock(on) {
+    Array.from(root.children).forEach((el) => {
+      if (el !== pa) el.inert = on;
+    });
+    const html = document.documentElement.style;
+    html.scrollbarGutter = on ? 'stable' : '';
+    html.overflow = on ? 'hidden' : '';
+  }
+
+  function paBad(msg) {
+    paErr.textContent = msg;
+    paField.classList.toggle('bad', !!msg);
+    if (msg) paEmail.setAttribute('aria-invalid', 'true');
+    else paEmail.removeAttribute('aria-invalid');
+  }
+
+  // The button the visitor pressed grows into the dialog, and shrinks back into it on close.
+  function openPa(trigger) {
+    if (s.pa || !pa.hidden || s.phase !== 'done') return;
+    s.pa = true;
+    paS.trigger = trigger;
+    paS.from = trigger.getAttribute('data-pa') || '';
+    const book = paS.from === 'finale' ? PICKS[s.pick] : '';
+    $('paBook').hidden = !book;
+    $('paBookName').textContent = book;
+    $('paMain').hidden = false;
+    $('paDone').hidden = true;
+    paBad('');
+    pa.hidden = false;
+    paLock(true);
+    const to = paFit();
+    const from = trigger.getBoundingClientRect();
+    $('paScrim').animate([{ opacity: 0 }, { opacity: 1 }], { duration: 400, easing: 'ease-out' });
+    if (reduced || !from.width) {
+      paPanel.animate([{ opacity: 0, transform: 'scale(.97)' }, { opacity: 1, transform: 'none' }], { duration: 240, easing: 'ease-out' });
+    } else {
+      trigger.style.visibility = 'hidden';
+      paPanel.animate([box(from, from.height / 2), box(to, 28)], { duration: 620, easing: EXPO });
+      paGhost.animate([{ opacity: 1 }, { opacity: 1, offset: 0.1 }, { opacity: 0 }], { duration: 360, easing: 'ease-out' });
+      paIn.animate([{ opacity: 0, transform: 'translateY(14px)', filter: 'blur(6px)' }, { opacity: 1, transform: 'none', filter: 'none' }], { duration: 520, delay: 180, easing: EXPO, fill: 'backwards' });
+    }
+    try {
+      (fine ? paEmail : paPanel).focus({ preventScroll: true });
+    } catch (e) {}
+  }
+
+  function closePa() {
+    if (!s.pa) return;
+    s.pa = false;
+    const trigger = paS.trigger;
+    const from = paPanel.getBoundingClientRect();
+    const to = trigger.getBoundingClientRect();
+    const home = !reduced && to.width > 0 && to.bottom > 0 && to.top < window.innerHeight;
+    stopAll();
+    const dur = home ? 460 : 220;
+    $('paScrim').animate([{ opacity: 1 }, { opacity: 0 }], { duration: dur, easing: 'ease-in', fill: 'forwards' });
+    let anim;
+    if (home) {
+      paIn.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, easing: 'ease-in', fill: 'forwards' });
+      paGhost.animate([{ opacity: 0 }, { opacity: 0, offset: 0.45 }, { opacity: 1 }], { duration: dur, fill: 'forwards' });
+      anim = paPanel.animate([box(from, 28), box(to, to.height / 2)], { duration: dur, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' });
+    } else {
+      anim = paPanel.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'scale(.97)' }], { duration: dur, easing: 'ease-in', fill: 'forwards' });
+    }
+    anim.onfinish = () => {
+      stopAll();
+      pa.hidden = true;
+      trigger.style.visibility = '';
+      paLock(false);
+      try {
+        trigger.focus({ preventScroll: true });
+      } catch (e) {}
+    };
+  }
+
+  function showDone(email, how) {
+    const from = paPanel.getBoundingClientRect();
+    $('paMain').hidden = true;
+    $('paDone').hidden = false;
+    $('paDoneTitle').textContent = how === 'mail' ? 'One last tap.' : 'You’re on the list.';
+    $('paDoneText').innerHTML = how === 'mail'
+      ? 'Your email app just opened with a pre-apply note for <b>' + esc(email) + '</b>. Press send and you’re in. No email app? Write to <a href="mailto:sinlines.read@gmail.com">sinlines.read@gmail.com</a>.'
+      : 'We’ll write to <b>' + esc(email) + '</b> when sinlines lands on Android and iOS.';
+    const to = paFit();
+    if (!reduced) {
+      paPanel.animate([box(from, 28), box(to, 28)], { duration: 520, easing: EXPO });
+      $('paDone').animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 480, easing: EXPO });
+    }
+    try {
+      $('paDoneTitle').focus({ preventScroll: true });
+    } catch (e) {}
+  }
+
+  $('paForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (paS.sending) return;
+    const email = paEmail.value.trim();
+    if (!EMAIL.test(email)) {
+      paBad('That email doesn’t look quite right. Try again?');
+      paEmail.focus();
+      return;
+    }
+    paBad('');
+    paS.sending = true;
+    paSend.disabled = true;
+    paSend.classList.add('busy');
+    $('paSendLabel').textContent = 'Sending…';
+    Promise.resolve()
+      .then(() => preApply({ email, from: paS.from, book: paS.from === 'finale' ? PICKS[s.pick] : '' }))
+      .then((how) => showDone(email, how), () => paBad('That didn’t go through. Try again in a moment.'))
+      .then(() => {
+        paS.sending = false;
+        paSend.disabled = false;
+        paSend.classList.remove('busy');
+        $('paSendLabel').textContent = 'Pre-apply';
+      });
+  });
+  paEmail.addEventListener('input', () => {
+    if (paErr.textContent) paBad('');
+  });
+  root.addEventListener('click', (e) => {
+    const t = e.target && e.target.closest ? e.target : null;
+    if (!t) return;
+    if (t.closest('[data-pa-close]')) closePa();
+    else if (t.closest('[data-pa]')) openPa(t.closest('[data-pa]'));
+  });
 
   // Menu for small screens.
   const menu = $('menu');
@@ -1237,6 +1535,7 @@ main:focus{outline:none}
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
     if (s.phase !== 'done') skipIntro();
+    else if (s.pa) closePa();
     else if (s.menu) setMenu(false);
   });
 
@@ -1312,7 +1611,7 @@ main:focus{outline:none}
       if (!raf) raf = requestAnimationFrame(loop);
     };
     window.addEventListener('wheel', (e) => {
-      if (e.ctrlKey || e.metaKey) return;
+      if (e.ctrlKey || e.metaKey || s.pa) return;
       if (s.menu) {
         e.preventDefault();
         return;
@@ -1351,7 +1650,7 @@ main:focus{outline:none}
       e.preventDefault();
       setTimeout(() => {
         const el = document.getElementById(id);
-        if (el) glideTo(el.getBoundingClientRect().top + se.scrollTop - (id === 'top' ? 0 : 72));
+        if (el) glideTo(el.getBoundingClientRect().top + se.scrollTop - 72);
       }, 40);
     });
     paintScroll();
@@ -1399,6 +1698,7 @@ main:focus{outline:none}
     s.wide = window.innerWidth >= 900;
     paint();
     paintScroll();
+    if (s.pa) paFit();
   });
 
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
