@@ -1147,7 +1147,7 @@ main:focus{outline:none}
           body: JSON.stringify({ email: entry.email, from: entry.from, book: entry.book || '', website: entry.website || '' })
       }).then(
           (res) => res.json().catch(() => ({})).then((data) => {
-              if (res.ok && data.ok) return data.sent ? 'sent' : 'saved';
+              if (res.ok && data.ok) return data.already ? 'already' : data.sent ? 'sent' : 'saved';
               throw new Error(data.error || fail);
           }),
           () => { throw new Error(fail); }
@@ -1512,9 +1512,11 @@ main:focus{outline:none}
     $('paMain').hidden = true;
     $('paDone').hidden = false;
     $('paDoneTitle').textContent = 'You’re on the list.';
-    $('paDoneText').innerHTML = how === 'saved'
-      ? 'Our email is busy today, so pre-apply again tomorrow with <b>' + esc(email) + '</b> to get your code.'
-      : 'We’ve sent your code to <b>' + esc(email) + '</b>. Check your inbox, and your spam folder just in case.';
+    $('paDoneText').innerHTML = how === 'already'
+      ? 'You’re already on the list with <b>' + esc(email) + '</b>. Your code is in the email we sent you before, so check your inbox, and your spam folder just in case.'
+      : how === 'saved'
+        ? 'Our email is busy today, so pre-apply again tomorrow with <b>' + esc(email) + '</b> to get your code.'
+        : 'We’ve sent your code to <b>' + esc(email) + '</b>. Check your inbox, and your spam folder just in case.';
     const to = paFit();
     paBg.animate([{ transform: toward(from, to) }, { transform: 'none' }], { duration: 480, easing: EXPO });
     $('paDone').animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 480, easing: EXPO });
@@ -1522,6 +1524,28 @@ main:focus{outline:none}
       $('paDoneTitle').focus({ preventScroll: true });
     } catch (e) {}
   }
+
+  // Emails that already got their code from this browser, kept as short fingerprints rather than the emails themselves,
+  // so a second pre-apply here says so even before the server does.
+  const SEEN = 'sl-pre-applied';
+  const mark = (email) => {
+    let h = 2166136261;
+    for (const ch of email.toLowerCase()) h = Math.imul(h ^ ch.codePointAt(0), 16777619);
+    return (h >>> 0).toString(36);
+  };
+  const seenList = () => {
+    try {
+      return JSON.parse(localStorage.getItem(SEEN) || '[]');
+    } catch (e) {
+      return [];
+    }
+  };
+  const remember = (email) => {
+    try {
+      const list = seenList();
+      if (!list.includes(mark(email))) localStorage.setItem(SEEN, JSON.stringify(list.concat(mark(email)).slice(-20)));
+    } catch (e) {}
+  };
 
   $('paForm').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -1539,7 +1563,11 @@ main:focus{outline:none}
     $('paSendLabel').textContent = 'Sending…';
     Promise.resolve()
       .then(() => preApply({ email, from: paS.from, book: paS.from === 'finale' ? PICKS[s.pick] : '', website: $('paWebsite').value }))
-      .then((how) => showDone(email, how), (err) => paBad((err && err.message) || 'That didn’t go through. Try again in a moment.'))
+      .then((how) => {
+        const repeat = how === 'already' || (how === 'sent' && seenList().includes(mark(email)));
+        if (how !== 'saved') remember(email);
+        showDone(email, repeat ? 'already' : how);
+      }, (err) => paBad((err && err.message) || 'That didn’t go through. Try again in a moment.'))
       .then(() => {
         paS.sending = false;
         paSend.disabled = false;
