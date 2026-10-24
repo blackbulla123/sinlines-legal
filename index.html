@@ -1769,8 +1769,15 @@ main:focus{outline:none}
   renderHero();
   renderDemo();
   enableMotion();
-  const deep = location.hash && document.getElementById(location.hash.slice(1));
-  if (deep) {
+  // sinlines.com/#pre-apply skips the intro and opens the pre-apply popup from the hero button.
+  const askPa = /^#pre-?apply$/i.test(location.hash);
+  const deep = !askPa && location.hash && document.getElementById(location.hash.slice(1));
+  if (askPa) {
+    s.entered = true;
+    setPhase('done');
+    window.scrollTo(0, 0);
+    requestAnimationFrame(() => openPa(document.querySelector('[data-pa="hero"]')));
+  } else if (deep) {
     s.entered = true;
     setPhase('done');
     deep.scrollIntoView();
