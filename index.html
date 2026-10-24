@@ -411,7 +411,9 @@ main:focus{outline:none}
 .coming{display:inline-flex;align-items:center;gap:24px;font:600 clamp(16px,2vw,26px)/1 var(--sans);letter-spacing:.6em;text-transform:uppercase;color:#DDF3FF;margin-top:20px}
 .coming i{display:block;width:clamp(40px,10vw,150px);height:2px;background:linear-gradient(90deg,transparent,#FFD25E)}
 .coming i.r{background:linear-gradient(270deg,transparent,#FFD25E)}
-.soon{margin:18px 0 0;font:800 clamp(110px,21vw,310px)/.84 var(--sans);letter-spacing:-.045em;text-transform:uppercase;color:#EAF3FF;text-shadow:0 0 30px rgba(124,203,255,.65),0 0 90px rgba(46,141,255,.85),0 0 190px rgba(46,141,255,.55)}
+.soon{position:relative;isolation:isolate;margin:18px 0 0;font:800 clamp(110px,21vw,310px)/.84 var(--sans);letter-spacing:-.045em;text-transform:uppercase;color:#EAF3FF;text-shadow:0 0 26px rgba(124,203,255,.65),0 0 70px rgba(46,141,255,.85)}
+.soon::before{content:'';position:absolute;left:50%;top:50%;z-index:-1;width:130%;height:190%;translate:-50% -50%;background:radial-gradient(closest-side,rgba(46,141,255,.42),rgba(46,141,255,.14) 55%,rgba(46,141,255,0));pointer-events:none}
+.soon .sl{display:inline-block}
 .fin-sub{margin:34px auto 0;max-width:30em;font-size:clamp(18px,1.6vw,21px);line-height:1.6;color:var(--ice)}
 .stores{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:40px}
 .store{display:inline-flex;align-items:center;gap:12px;padding:12px 22px 12px 16px;border-radius:16px;background:rgba(4,8,20,.66);border:1px solid rgba(170,200,255,.24);text-align:left;color:var(--ice)}
@@ -457,8 +459,10 @@ main:focus{outline:none}
 .rv-on [data-reveal="words"].in .mw.g{color:#FFD25E}
 .rv-on [data-reveal="words"] .blank::after{transform:scaleX(0);animation:none;transition:transform .8s var(--ease);transition-delay:inherit}
 .rv-on [data-reveal="words"].in .blank::after{transform:scaleX(1)}
-.rv-on .soon[data-reveal]{opacity:0;letter-spacing:.14em;filter:blur(14px);transition:opacity 1.4s var(--ease),letter-spacing 1.8s var(--expo),filter 1.4s var(--ease)}
-.rv-on .soon[data-reveal].in{opacity:1;letter-spacing:-.045em;filter:none}
+.rv-on .soon[data-reveal]{opacity:0;transition:opacity 1.4s var(--ease)}
+.rv-on .soon[data-reveal] .sl{transform:translateX(calc((var(--i) - 1.5) * .185em));transition:transform 1.8s var(--expo)}
+.rv-on .soon[data-reveal].in{opacity:1}
+.rv-on .soon[data-reveal].in .sl{transform:none}
 .rv-on .d1{transition-delay:.1s}.rv-on .d2{transition-delay:.2s}.rv-on .d3{transition-delay:.3s}
 
 @supports (animation-timeline: view()) {
@@ -474,7 +478,7 @@ main:focus{outline:none}
 .calm.rv-on [data-reveal]{transform:none!important;filter:none!important;transition:opacity .6s ease!important}
 .calm.rv-on [data-reveal="lines"] .mline>*{transform:none!important}
 .calm.rv-on [data-reveal="words"] .blank::after{transform:none!important}
-.calm.rv-on .soon[data-reveal]{letter-spacing:-.045em!important}
+.calm.rv-on .soon[data-reveal] .sl{transform:none!important}
 .calm .layers{--p:1!important;transition:none!important}
 
 .promo{position:relative;z-index:3;display:flex;height:60px;margin:10px 0 18px;background:linear-gradient(90deg,#0B1D48,#11306E 22%,#14377C 50%,#11306E 78%,#0B1D48);box-shadow:0 22px 50px -24px rgba(255,190,70,.55),0 0 70px -24px rgba(46,141,255,.6)}
@@ -981,7 +985,7 @@ main:focus{outline:none}
 <div class="wrap" style="position: relative; display: flex; flex-direction: column; align-items: center">
 <span class="mark xl fin-logo" data-reveal="zoom"><img src="logo.png" alt="sinlines"></span>
 <div class="coming" data-reveal="up"><i></i>Coming<i class="r"></i></div>
-<h2 class="soon" id="launch-title" data-reveal="soon">Soon</h2>
+<h2 class="soon" id="launch-title" data-reveal="soon"><span class="sr">Soon</span><span aria-hidden="true"><span class="sl" style="--i: 0">S</span><span class="sl" style="--i: 1">o</span><span class="sl" style="--i: 2">o</span><span class="sl" style="--i: 3">n</span></span></h2>
 <p class="fin-sub" data-reveal="up">Coming soon to Android and iOS. Keep visiting us: the first page is almost ready.</p>
 <div class="stores" data-reveal="up">
 <div class="store"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7CCBFF" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5l12 8.5-12 8.5z"></path><path d="M5 3.5l9 11.5M5 20.5l9-11.5"></path></svg><span><small>Coming soon on</small><b>Google Play</b></span></div>
