@@ -1057,6 +1057,7 @@ main:focus{outline:none}
 <form class="pa-form" id="paForm" novalidate>
 <label class="pa-field" id="paField"><span class="sr">Your email</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg><input id="paEmail" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" maxlength="254" placeholder="you@example.com" aria-describedby="paErr" required></label>
 <button class="lq" type="submit" id="paSend"><span class="lq-label"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C12.6 7.6 16.4 11.4 22 12C16.4 12.6 12.6 16.4 12 22C11.4 16.4 7.6 12.6 2 12C7.6 11.4 11.4 7.6 12 2Z" fill="currentColor"></path></svg><span id="paSendLabel">Pre-apply</span></span></button>
+<input id="paWebsite" name="sl_extra" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;opacity:0">
 <p class="pa-err" id="paErr" role="alert"></p>
 </form>
 <p class="pa-fine">*Terms apply. Full cashback details at launch.</p>
@@ -1135,14 +1136,21 @@ main:focus{outline:none}
       ];
   }
 
-  // The pre-apply wire: every Pre-apply form ends here with { email, from, book }. from is the button that
-  // opened it (nav, band, hero or finale); book is the first classic picked in the finale, when it came from there.
-  // Not connected yet. Until it is, it opens the visitor's email app with a pre-apply note so no one is lost.
-  // To connect it, send the entry to wherever pre-applies should be kept and resolve once it is saved.
+  // The pre-apply wire: saves the email in Supabase and emails the visitor their code.
+  const PRE_APPLY_URL = 'https://urlhupulqodwwtcmhtns.supabase.co/functions/v1/pre-apply';
   function preApply(entry) {
-      const body = 'Hi SinLines team! Please pre-apply me for SinLines: ' + entry.email + '.' + (entry.book ? ' The first classic I will open: ' + entry.book + '.' : '');
-      location.href = 'mailto:sinlines.read@gmail.com?subject=' + encodeURIComponent('Pre-apply for SinLines') + '&body=' + encodeURIComponent(body);
-      return Promise.resolve('mail');
+      const fail = 'That didn’t go through. Try again in a moment.';
+      return fetch(PRE_APPLY_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: entry.email, from: entry.from, book: entry.book || '', website: entry.website || '' })
+      }).then(
+          (res) => res.json().catch(() => ({})).then((data) => {
+              if (res.ok && data.ok) return data.sent ? 'sent' : 'saved';
+              throw new Error(data.error || fail);
+          }),
+          () => { throw new Error(fail); }
+      );
   }
   
   function faqList() {
@@ -1502,10 +1510,10 @@ main:focus{outline:none}
     const from = paS.rect;
     $('paMain').hidden = true;
     $('paDone').hidden = false;
-    $('paDoneTitle').textContent = how === 'mail' ? 'One last tap.' : 'You’re on the list.';
-    $('paDoneText').innerHTML = how === 'mail'
-      ? 'Your email app just opened with a pre-apply note for <b>' + esc(email) + '</b>. Press send and you’re in. No email app? Write to <a href="mailto:sinlines.read@gmail.com">sinlines.read@gmail.com</a>.'
-      : 'We’ll write to <b>' + esc(email) + '</b> when sinlines lands on Android and iOS.';
+    $('paDoneTitle').textContent = 'You’re on the list.';
+    $('paDoneText').innerHTML = how === 'saved'
+      ? 'Our email is busy today, so pre-apply again tomorrow with <b>' + esc(email) + '</b> to get your code.'
+      : 'We’ve sent your code to <b>' + esc(email) + '</b>. Check your inbox, and your spam folder just in case.';
     const to = paFit();
     paBg.animate([{ transform: toward(from, to) }, { transform: 'none' }], { duration: 480, easing: EXPO });
     $('paDone').animate([{ opacity: 0, transform: 'translateY(10px)' }, { opacity: 1, transform: 'none' }], { duration: 480, easing: EXPO });
@@ -1529,8 +1537,8 @@ main:focus{outline:none}
     paSend.classList.add('busy');
     $('paSendLabel').textContent = 'Sending…';
     Promise.resolve()
-      .then(() => preApply({ email, from: paS.from, book: paS.from === 'finale' ? PICKS[s.pick] : '' }))
-      .then((how) => showDone(email, how), () => paBad('That didn’t go through. Try again in a moment.'))
+      .then(() => preApply({ email, from: paS.from, book: paS.from === 'finale' ? PICKS[s.pick] : '', website: $('paWebsite').value }))
+      .then((how) => showDone(email, how), (err) => paBad((err && err.message) || 'That didn’t go through. Try again in a moment.'))
       .then(() => {
         paS.sending = false;
         paSend.disabled = false;
