@@ -97,6 +97,12 @@ a {
   text-decoration: none;
 }
 
+.brand-logo {
+  width: 46px;
+  height: 46px;
+  margin: -8px -6px -8px -10px;
+}
+
 .waves {
   width: 46px;
   height: 15px;
